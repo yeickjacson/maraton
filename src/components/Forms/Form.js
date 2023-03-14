@@ -57,25 +57,23 @@ function Form() {
     }
   };
 
-  const clasificarImc = () => {
-    const imc = calcularIMC();
-    if (imc < 18.5) {
-      setImc('Bajo peso');
-    } else if (imc >= 18.5 && imc < 24.9) {
-      setImc('Normal');
-    } else if (imc >= 25 && imc < 29.9) {
-      setImc('Sobrepeso');
-    } else if (imc >= 30 && imc < 34.9) {
-      setImc('Obesidad grado 1');
-    } else if (imc >= 35 && imc < 39.9) {
-      setImc('Obesidad grado 2');
-    } else if (imc >= 40) {
-      setImc('Obesidad morbida o grado 3');
-    } else {
-      setImc('');
+  const pesoIdeal = () => {
+    if ( imc > 18.5 || imc < 24.9 ){
+      return pesoIdeal;
     }
-  };
+    else{
+      return 0;
+    }
+  }
 
+  const validarValidacion = () => {
+    if (pesoIdeal() && dolorPecho === 'No'){
+      return'Acto';
+    }
+    else{
+      return'No acto';
+    }
+  }
 
 
   return (
@@ -130,7 +128,7 @@ function Form() {
           type="number" 
           name="height" 
           value={altura}
-          onChange={(e) => { setAltura(e.target.value); clasificarImc(); }}
+          onChange={(e) => { setAltura(e.target.value); calcularIMC(); }}
           step="0.01" />
 
           <br/>
@@ -140,7 +138,7 @@ function Form() {
           type="number" 
           name="weight"
           value={peso}
-          onChange={(e) => { setPeso(e.target.value); clasificarImc(); }}
+          onChange={(e) => { setPeso(e.target.value); calcularIMC(); }}
           step="0.01" />
 
           <br/>
@@ -192,7 +190,8 @@ function Form() {
 
           <label>Valoracion:</label>
           <input type="text" 
-          name="valoracion" 
+          name="valoracion"
+          value={validarValidacion()}
           readOnly/>
 
           <br/>
