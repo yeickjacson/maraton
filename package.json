@@ -1,5 +1,6 @@
 {
   "name": "maraton-aburra",
+  "homepage": "https://github.com/yeickjacson/maraton.git",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
