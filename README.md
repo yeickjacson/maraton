@@ -1,4 +1,18 @@
-# Getting Started with Create React App
+By YJ
+
+Important!
+
+Pasos a Seguir:
+
+1. Instalar React: ejecuta en cosola "npm install react react-dom" o simplemnte "npm i react react-dom"
+ 
+2. Para correr el codigo escribir en la consola luego de instalar react "npm start"
+
+3. Si el navegador no se abrio automaticamente...abrir en http://localhost:3000/
+
+
+
+ Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 

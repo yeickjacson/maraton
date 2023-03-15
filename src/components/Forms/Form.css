@@ -1,32 +1,54 @@
+/* Css para formulario */
+
 .Form {
+  text-align: left;
+  color: white;
+  background-color: whitesmoke;
+}
+
+.container {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size:18px;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
+  padding: 20px;
+  border-radius: 5px;
+  margin: 20px auto;
+  max-width: 600px;
+  }
+
+  h1 {
     text-align: center;
+    margin-bottom: 20px;
+  }
+
+  label {
+    display: block;
+    margin-bottom: 5px;
+  }
+
+  /* css para inputs */
+
+  input,select{
+    color: black;
+    margin: 5px;
+    width: 90%;
+    margin-bottom: 10px;
+    padding: 10px;
+    border-radius: 5px;
+  }
+
+  input[type='radio'] {
+    display: inline-block;
+    /* margin-right: 2px; */
   }
   
 
-.container {
-    background-color: #282c34;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: left;
-    font-size:18px;
-    color: white; 
-  }
-  input{
-    color: black;
-    margin: 5px;
-    border-radius: 5px;
-    padding: 5px;
-  }
-  
-  select{
-    color: black;
-    margin: 5px;
-    border-radius: 5px;
-    padding: 5px;
-  }
+  /* botones de eliminar y guardar */
   
   .buttonDelete {
     background-color: red;
@@ -37,8 +59,11 @@
     cursor: pointer;
     margin-right: 8px;
   }
+
+  .buttonDelete:hover{
+    background-color: rgb(206, 41, 41);
+  }
   
-    
   .buttonSave {
     background-color: #61dafb;
     color: white;
@@ -47,5 +72,13 @@
     padding: 8px 12px;
     cursor: pointer;
     margin-right: 8px;
+    
   }
+  
+  .buttonSave:hover{
+    background-color: #24add3;
+  }
+
+  
+
   

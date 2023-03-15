@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './Form.css';
 
 
@@ -13,7 +13,8 @@ function Form() {
   const [imc, setImc] = useState('');
   const [talla, setTalla] = useState(''); 
   const [dolorPecho, setDolorPecho] = useState('');
-  const [resultado, setResultado] = useState();
+  const [resultado, setResultado] = useState(false);
+  const [ciudades, setCiudades] = useState([]);
 
   const handleSubmit = (e) => { 
     e.preventDefault(); 
@@ -27,12 +28,15 @@ function Form() {
       peso,
       imc,
       talla,
-      dolorPecho
+      dolorPecho,
+      ciudades
     };
     console.log(result);
 
     setResultado(true);
   };
+
+// resetear campos
 
   const handleDelete = () => {
     setNombreCompleto('');
@@ -47,6 +51,8 @@ function Form() {
     setResultado(false);
   };
 
+//calcular Imc  
+
   const calcularIMC = () => {
     if (altura && peso) {
       const alturaMetros = altura / 100;
@@ -57,23 +63,41 @@ function Form() {
     }
   };
 
-  const pesoIdeal = () => {
-    if ( imc > 18.5 || imc < 24.9 ){
-      return pesoIdeal;
+// Peso ideal
+  const pesoIdeal = (imc) => {
+    if (imc > 18.5 && imc < 24.9){
+      return true
     }
     else{
-      return 0;
+      return false
     }
   }
 
+// Campo valoracion
   const validarValidacion = () => {
-    if (pesoIdeal() && dolorPecho === 'No'){
-      return'Acto';
+    const pesoIdealCalculado = pesoIdeal(imc);
+    if (pesoIdealCalculado && dolorPecho === 'No') {
+      return 'Acto';
+    } 
+    else if (pesoIdealCalculado && dolorPecho === 'Si') {
+      return 'No acto';
+    } 
+    else if (pesoIdealCalculado===false && dolorPecho ){
+      return 'No acto';
     }
-    else{
-      return'No acto';
+    else {
+      return '';
     }
   }
+
+//consumiendo Api / Departamento Antioquia
+
+  useEffect(() => {
+    fetch('https://api-colombia.com/api/v1/Department/2/cities')
+      .then(response => response.json())
+      .then(data => setCiudades(data))
+      .catch(error => console.error(error));
+  }, []);
 
 
   return (
@@ -81,9 +105,10 @@ function Form() {
      
       <div className="container">
 
-      <h1>MEDIA MARATÓN ABURRÁ DE LOS YAMESÍES</h1>
+      <h1>Media Maratón Aburrá De Los Yamiesíes</h1>
 
         <form onSubmit={handleSubmit}>
+ 
           <label>Nombre Completo:</label>
           <input 
           type="text" 
@@ -114,12 +139,15 @@ function Form() {
           <br/>   
 
           <label>Ciudad:</label>
-          <input 
-          type="text" 
-          name="city" 
-          value={ciudad}
-          onChange={(e) => setCiudad(e.target.value)}
-          />
+          <select 
+          name="ciudad" 
+          onChange={(e) => setCiudad(e.target.value)}>
+          {
+          (
+            ciudades.map(ciudad => (<option key={ciudad.id} value={ciudad.name}>{ciudad.name}</option>))
+          )
+          }
+          </select>
 
           <br/>
 
@@ -179,12 +207,12 @@ function Form() {
             />Si </label>
 
             <label>
-              <input 
-              type="radio" 
-              name="dolorPecho"
-              checked={dolorPecho === 'No'}
-              onChange={(e) => setDolorPecho(e.target.value)}
-              value="No"  /> No </label>
+            <input 
+            type="radio" 
+            name="dolorPecho"
+            checked={dolorPecho === 'No'}
+            onChange={(e) => setDolorPecho(e.target.value)}
+            value="No"  /> No </label>
           
           <br/>
 
@@ -202,6 +230,7 @@ function Form() {
 
         </form>
 
+{/* informacion registrada por el participante... */}
         {resultado && (
           <div>
             <h2>Información registrada:</h2>
@@ -214,6 +243,7 @@ function Form() {
             <p>IMC: {imc}</p>
             <p>Talla: {talla}</p>
             <p>Dolor Pecho: {dolorPecho}</p>
+            <p>Valoracion: {validarValidacion()}</p>
           </div>
         )}
 
